@@ -23,8 +23,9 @@ module Mysql2
         next unless opts.key?(key)
         send(:"#{key}=", opts[key])
       end
-      # force the encoding to utf8
-      self.charset_name = opts[:encoding] || 'utf8'
+      if encoding = opts[:encoding]
+        self.charset_name = encoding
+      end
 
       @read_timeout = opts[:read_timeout]
       if @read_timeout and @read_timeout < 0
